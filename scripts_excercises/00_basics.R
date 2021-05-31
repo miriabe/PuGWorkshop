@@ -42,12 +42,21 @@ typeof(3.2)
 # and run your code using ctrl + return!
 
 # 2.1) What data type is 2? Think first, then try typeof(). Did you expect this result?
+## Dezimahlzahl -> ja double, why? er denkt es ist 2.00000
+typeof(2)
 
 # 2.2) What data type is 1:4?
+## ganze Zahlen
+typeof(1:4)
 
 # 2.3) What data type is "R"? What is "I love R"?
+## charakter: alles was Text
+typeof("R")
+typeof("I love R")
 
 # 2.4) What data type is TRUE? What data type is FALSE? (Don't use quotation marks around these!)
+## logical
+
 
 #### 3 LOGICALS ####
 
@@ -55,21 +64,45 @@ typeof(3.2)
 # wild?
 
 # 3.1) Type 12 > 3 into your console. Then, type 12 < 3.
+12 > 3
+12 < 3
+## es sagt mir ob die Aussage stimmt
 
 # 3.1) Try 12 == 12. And now 12 == 13. What does == do?
+12 == 12
+12 == 13
+## == bedeutet entspricht
 
 # 3.2) Try out: FALSE & FALSE, then FALSE & TRUE and finally, TRUE & TRUE. What happens?
-
+FALSE & FALSE
+FALSE & TRUE
+TRUE & TRUE
+## false und false ist false
+## false und true ist false
+## true ans true ist false
 # 3.3) Try the same as above, but replace & with | (alt gr + <). Do you know what do & and | do?
-
+FALSE | FALSE
+FALSE | TRUE
+TRUE | TRUE
+## & und |oder
 # 3.4) What do you think will be the result of 4 < 3 | 4 == 4? What is 4 < 3 & 4 == 4?
+4 < 3 | 4 == 4 #eins von beidem ist wahr
+4 < 3 & 4 == 4 #beies ist nicht wahr
+
 
 # 3.5) What is "cat" != "dog"?
+"cat" != "dog" #ungleich
 
 # 3.6) What is "cat" > "dog"? What about other words? Can you find a pattern?
+"cat" > "dog"
+"cats" > "dog" #nicht die länge
+"cat" > "apple" #geht nach Alphabet
 
 # 3.7) By the way, did you know that logicals have numeric representations? Try TRUE + 1.
 #      Then try FALSE + 1. What is the numeric value of TRUE? What is the numeric value of FALSE?
+TRUE + 1
+FALSE + 1 #false ist Null, true ist 1
+
 
 #### 4 VARIABLES ####
 
@@ -79,20 +112,25 @@ typeof(3.2)
 # When we store something in a variable, we say we "assign" something to that variable. It works
 # like this:
 
-single_number <- 7
+single_number <- 7 #alt und minus ist Pfeil
+another_number = 12 # = bedeutet das gleiche wie <- 
 
 # ALWAYS USE VARIABLE NAMES THAT TELL YOU WHAT THAT VARIABLE CONTAINS!!!
 
 # 4.1) Type single_number into the console and hit return.
+4
 
 # 4.2) Run the following code. What will happen now if you type single_number into the console?
 single_number <- 2
+single_number
 
 # 4.3) Assign something to a variable with a name of your choice.
+lucky_number <- 3
 
 # 4.4) Examine what happens here. What is the result? What do you think will single_number
 #      contain now? 2 or 6?
 single_number + 4
+single_number
 
 # 4.5) What do you observe here?
 number2 <- 2
@@ -100,7 +138,7 @@ number6 <- 6
 
 number2 + number6
 
-multiplied <- number2 * number6
+multiplied <- number2 * number6 #es erstellt eine neue variable
 multiplied
 
 #### THIS IS A GIT HUB CHECKPOINT ####
