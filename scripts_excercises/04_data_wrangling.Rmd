@@ -575,8 +575,10 @@ This is how we would do that:
 
 ```{r}
 # calculate the sum of Q1 and Q2 and save it in a column sum_Q1_Q2 - put it after Q2
+
+
 nerd_red %>% 
-  mutate(sum_Q1_Q2 = sum(Q1:Q2), .after = nerdy)
+  mutate(sum_Q1_Q2 = sum(Q1+Q2), .after = nerdy)
 ```
 
 We can see how the columns `Q1` and `Q2` add up per row in our new column.
@@ -611,6 +613,11 @@ Note that I overwrote `nerd_red` with the version of `nerd_red` that now has a c
 # across ...
 # Q1 - Q26
 # ungroup at the end
+
+nerd_red %>% 
+  rowwise %>% 
+  mutate(nerd_score = sum(across (Q1:Q26)), .before = Q1) %>% 
+  ungroup()
 ```
 
 ## Recoding data
@@ -623,6 +630,16 @@ This is how we would recode the gender column:
 ```{r}
 # use case_when() to recode the gender column
 # overwrite nerd_red
+nerd_red <- 
+nerd_red %>% 
+  mutate(
+    gender = case_when(
+      gender == 1 ~ "male",
+      gender == 2 ~ "female",
+      gender == 3 ~ "other"
+    )
+  )
+nerd_red
 ```
 
 Let's unpack this: `case_when()`, as the name suggests, does stuff when a certain case occurs.
@@ -643,6 +660,8 @@ For example, if we want to classify these numbers into "one digit" or "more than
 some_numbers <- c(2, 24, 12, 5, 1, 353, 1)
 
 # use ifelse to put "more" when some_numbers has more than one digit, and "one" if it's one digit
+ifelse(some_numbers > 10, "more", "one")
+  
 ```
 
 We can also modify the data based on this.
@@ -652,6 +671,7 @@ For example, we could multiply the data with -1 whenever it has more than one di
 # multiply ome_numbers with -1 whenever it has more than one digit, and leave it as it is 
 # when it is one digit.
 # Question: What does some_numbers contain now?
+ifelse(some_numbers < 10, some_numbers, some_numbers*-1)
 ```
 
 Note how we have to call `some_numbers`, even if we're leaving things unchanged.
@@ -659,8 +679,29 @@ You can imagine it like this: Suppose you're creating a new vector.
 For every position of that vector, you contemplate whether you should put in the old number from `some_numbers`, or whether you should multiply it with -1 before adding it.
 
 6.1) Recode the `married` column. It's 1 = Never married, 2 = Currently married, 3 = Previously married. Overwrite `nerd_red` with the version that contains the recoded column.
+```{r}
+nerd_red <- 
+nerd_red %>% 
+  mutate(
+    married = case_when(
+      married == 1 ~ "never married",
+      married == 2 ~ "currently married",
+      married == 3 ~ "previously married"
+    )
+  )
+```
+
 
 6.2) Recode the `voted` column. It's 1 = Yes, 2 = No. Use `ifelse()`. Overwrite `nerd_red` with the version that contains the recoded column.
+```{r}
+nerd_red <- 
+nerd_red %>% 
+  mutate(
+    voted = ifelse(voted == 1, "yes", "no")
+  )
+nerd_red
+```
+
 
 6.3) Like `ifelse()`, `case_when()` can be used outside of `mutate()`. Can you use `case_when()` with the following vector so that you:
 1) add 20 when the number is below 0
@@ -669,6 +710,19 @@ For every position of that vector, you contemplate whether you should put in the
 
 ```{r}
 some_more_numbers <- c(12, 0, 0, -4, 0, -12, 5, 2)
+
+case_when(some_more_numbers < 0 ~ some_more_numbers +20,
+          some_more_numbers >=0 ~ some_more_numbers)
+
+case_when(some_more_numbers > 0 ~ some_more_numbers -2,
+          some_more_numbers <=0 ~ some_more_numbers)
+
+case_when(some_more_numbers == 0 ~ some_more_numbers + 999,
+          some_more_numbers =!0 ~ some_more_numbers)
+
+case_when(some_more_numbers < 0 ~ some_more_numbers +20,
+          some_more_numbers > 0 ~ some_more_numbers -2,
+          some_more_numbers == 0 ~ some_more_numbers + 999)
 ```
 
 ## Adding an id
@@ -683,12 +737,17 @@ The tidyverse has a built-in function for this, which goes like:
 
 ```{r}
 # use rowid_to_column() to create a new id column named id (var = id)
+nerd_red <- nerd_red %>% 
+  rowid_to_column(var = "id")
+nerd_red
 ```
 
 You could also number the rows like this:
 
 ```{r}
 # use nrow to create the same id column (add before age)
+nerd_red %>% 
+  mutate()
 ```
 
 **THIS IS A GITHUB PUSH CHECKPOINT**
